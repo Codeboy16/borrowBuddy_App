@@ -8,54 +8,55 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function TabLayout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        headerShown: false, // Hides the header for all tabs
+        tabBarLabelStyle: { fontSize: 16,fontWeight: 'bold' }, // Increase the font size
+        tabBarStyle: { height: 72, paddingBottom: 5, paddingTop:5}, // Increase tab bar height
+        tabBarActiveTintColor: '#1529fe', // Set active color for icon and text
+        tabBarInactiveTintColor: '#1e2a34', // Set inactive color for icon and text
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: () => <Feather name="home" size={35} color="black" />,
-          // tabBarIcon: ({ color, focused }) => (
-          //   <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} /> ..Add Logo For Home Screen
-          // ),
+          // tabBarIcon: ({ color }) => <Entypo name="home" size={35} color={color} />,
+          tabBarIcon: ({ color }) => <Feather name="home" size={35} color={color} />,
         }}
-      />
-      {/* Chats Section */}
+      /> 
       <Tabs.Screen
         name="Chats"
         options={{
           title: "Chats",
-          tabBarIcon: () => <Ionicons name="chatbubble-ellipses-outline" size={35} color="black" />,
+          tabBarIcon: ({ color }) => <Ionicons name="chatbubble-ellipses-outline" size={35} color={color} />,
         }}
       />
-       {/* Camera Section */}
       <Tabs.Screen
         name="Camera"
         options={{
           title: "",
-          tabBarIcon: () => (
-            <AntDesign name="pluscircleo" size={45} color="black" />
+          tabBarIcon: ({color}) => (
+            <AntDesign name="pluscircleo" size={46} color={color} />
           ),
         }}
       />
-        {/* Carts Section */}
       <Tabs.Screen
         name="Carts"
         options={{
           title: "Carts",
-          tabBarIcon: () => (
-            <AntDesign name="shoppingcart" size={35} color="black" />
+          tabBarIcon: ({color}) => (
+            <AntDesign name="shoppingcart" size={35} color={ color } />
           ),
         }}
       />
-      {/* User Section */}
       <Tabs.Screen
         name="User"
         options={{
           title: "User",
-          tabBarIcon: () => <AntDesign name="user" size={35} color="black" />,
+          tabBarIcon: ({color}) => <AntDesign name="user" size={35} color={color} />,
         }}
       />
     </Tabs>
   );
 }
-
