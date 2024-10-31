@@ -1,30 +1,50 @@
 import { Tabs } from "expo-router";
-import { StyleSheet, Text, View } from 'react-native';
-import React from "react";
+import { StyleSheet, View, Keyboard } from 'react-native';
+import React, { useEffect, useState } from "react";
 import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function TabLayout() {
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setIsKeyboardVisible(true);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setIsKeyboardVisible(false);
+    });
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   return (
     <Tabs
       screenOptions={{
-        headerShown: false, // Hides the header for all tabs
-        tabBarLabelStyle: { fontSize: 16,fontWeight: 'bold' }, // Increase the font size
-        tabBarStyle: { height: 72, paddingBottom: 5, paddingTop:5}, // Increase tab bar height
-        tabBarActiveTintColor: '#1529fe', // Set active color for icon and text
-        tabBarInactiveTintColor: '#1e2a34', // Set inactive color for icon and text
+        headerShown: false,
+        tabBarLabelStyle: { fontSize: 16, fontWeight: 'bold' },
+        tabBarStyle: {
+          height: isKeyboardVisible ? 0 : 72, // Hide tab bar when keyboard is open
+          paddingBottom: isKeyboardVisible ? 0 : 5,
+          paddingTop: isKeyboardVisible ? 0 : 5,
+          display: isKeyboardVisible ? 'none' : 'flex', // Additional way to hide it
+        },
+        tabBarActiveTintColor: '#1529fe',
+        tabBarInactiveTintColor: '#1e2a34',
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
-          // tabBarIcon: ({ color }) => <Entypo name="home" size={35} color={color} />,
           tabBarIcon: ({ color }) => <Feather name="home" size={35} color={color} />,
         }}
-      /> 
+      />
       <Tabs.Screen
         name="Chats"
         options={{
@@ -36,7 +56,7 @@ export default function TabLayout() {
         name="Camera"
         options={{
           title: "",
-          tabBarIcon: ({color}) => (
+          tabBarIcon: ({ color }) => (
             <AntDesign name="pluscircleo" size={46} color={color} />
           ),
         }}
@@ -45,8 +65,8 @@ export default function TabLayout() {
         name="Carts"
         options={{
           title: "Carts",
-          tabBarIcon: ({color}) => (
-            <AntDesign name="shoppingcart" size={35} color={ color } />
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="shoppingcart" size={35} color={color} />
           ),
         }}
       />
@@ -54,9 +74,10 @@ export default function TabLayout() {
         name="User"
         options={{
           title: "User",
-          tabBarIcon: ({color}) => <AntDesign name="user" size={35} color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="user" size={35} color={color} />,
         }}
       />
     </Tabs>
   );
 }
+

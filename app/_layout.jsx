@@ -1,15 +1,17 @@
+// app/_layout.tsx
 import { Stack } from 'expo-router';
-import 'react-native-reanimated';
-import { StatusBar,View } from 'react-native';
+import { StatusBar } from 'react-native';
 
 export default function RootLayout() {
   return (
     <>
-    <StatusBar backgroundColor="black"/>
+      <StatusBar backgroundColor="white" barStyle="dark-content" />
       <Stack>
+        <Stack.Screen name="Login" options={{ headerShown: false }} />
+        <Stack.Screen name="Signup" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
-      </>
+    </>
   );
 }
